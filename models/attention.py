@@ -37,9 +37,9 @@ class SimpleModel(nn.Module):
     def __init__(self):
         super(SimpleModel, self).__init__()
 
-        self.conv1 = nn.Conv2d(3, 4, kernel_size=3, padding=1)
-        self.self_attention = SelfAttention(4)
-        self.conv2 = nn.Conv2d(4, 3, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(3, 8, kernel_size=3, padding=1)
+        self.self_attention = SelfAttention(8)
+        self.conv2 = nn.Conv2d(8, 3, kernel_size=3, padding=1)
 
     def forward(self, x):
         x = self.conv1(x)

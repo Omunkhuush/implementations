@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 image_path = './exp_ganzo.png'
 image = Image.open(image_path).convert('RGB')
 transform = transforms.Compose([
-    transforms.Resize((256, 256)),
+    transforms.Resize((32, 32)),
     transforms.ToTensor(),
 ])
 
@@ -27,7 +27,7 @@ criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Training loop (you might need a larger dataset for meaningful training)
-num_epoch = 4
+num_epoch = 5000
 for epoch in range(num_epoch):
     # Forward pass
     output = model(input_image)
@@ -42,14 +42,14 @@ for epoch in range(num_epoch):
 
     print(f'Epoch [{epoch+1}/{num_epoch}], Loss: {loss.item():.4f}')
 
-# Visualize the original and reconstructed images
+# Visualize the original and reconstructed images on the GPU
 with torch.no_grad():
-    reconstructed_image = model(input_image)
+    reconstructed_image = model(input_image).cpu()  # Move reconstructed image to CPU
 
 plt.subplot(1, 2, 1)
 plt.title('Original Image')
-plt.imshow(transforms.ToPILImage()(input_image.squeeze(0)))
-plt.axis('off').convert('RGB')
+plt.imshow(transforms.ToPILImage()(input_image.cpu().squeeze(0)))
+plt.axis('off')
 
 plt.subplot(1, 2, 2)
 plt.title('Reconstructed Image')
