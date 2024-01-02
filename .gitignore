@@ -1,0 +1,6 @@
+*.npy
+data/
+__pycache__/*
+experiments/*
+__pycache__/
+*.py[cod]
